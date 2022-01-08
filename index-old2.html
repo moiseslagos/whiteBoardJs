@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WhiteBoard Soccer</title>
+  <script src="whiteboard.js"></script>
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css">
+  <link rel="stylesheet" href="whiteboard.css">
+</head>
+<body>
+<zwibbler showToolbar="false" pageView="true" defaultPaperSize="letter landscape">
+  <div class="tools">
+    <div class="items-tools">
+      <button tool z-on:click="usePickTool()" title="Select" z-class="{selected:getCurrentTool()=='pick'}">
+        <img src="assets/Puntero.png">
+      </button>
+      <button tool z-on:click="useBrushTool()" title="Draw" z-class="{selected:getCurrentTool()=='brush'}">
+        <img src="assets/Lapiz.png">
+      </button>
+      <!-- <button tool z-click="useLineTool({ lineWidth: 2 }, {singleLine: true})" title="Lines" z-class="{selected:getCurrentTool()=='line'}">
+        <i class="fas fa-pencil-ruler"></i>
+      </button> -->
+      <div class="hover-tool" title="Lines">
+        <button class="tool-doubleclick" data-toolid="1" title="lines" data-tool="useArrowTool" data-colorHex="#b90000" tool z-click="useArrowTool({arrowStyle:'solid',strokeStyle:'#b90000',dashes:'1,6', name:'useArrowTool'}, true)" z-class="{selected:getPropertySummary().properties.name == 'useArrowTool' }">
+          <img src="assets/flecha_punteada_rojo.png">
+        </button>
+        <div id="tools-1" class="items-colors show-tools-1" >
+          <button class="item-two" data-color="rojo" data-tool="useArrowTool" data-colorHex="#b90000" tool z-click="useArrowTool({arrowStyle:'solid',strokeStyle:'#b90000',dashes:'6,6', name:'useArrowTool'}, true)"><div class="i-color color-rojo"></div></button>
+          <button class="item-two" data-color="amarillo" data-tool="useArrowTool" data-colorHex="#e7d803" tool z-click="useArrowTool({arrowStyle:'solid',strokeStyle:'#e7d803',dashes:'6,6', name:'useArrowTool'}, true)"><div class="i-color color-amarillo"></div></button>
+          <button class="item-two" data-color="verde" data-tool="useArrowTool" data-colorHex="#02d802" tool z-click="useArrowTool({arrowStyle:'solid',strokeStyle:'#02d802',dashes:'6,6', name:'useArrowTool'}, true)"><div class="i-color color-verde"></div></button>
+        </div>
+      </div>
+      <div class="hover-tool" title="Lines">
+        <button class="tool-doubleclick" data-toolid="2" title="lines" data-tool="useLineTool" data-colorHex="#b90000" tool z-click="useLineTool({strokeStyle:'#b90000', name:'useLineTool'},{singleLine: true})" z-class="{selected:getPropertySummary().properties.name == 'useLineTool' }">
+          <img src="assets/Linea_solida_rojo.png">
+        </button>
+        <div id="tools-2" class="items-colors show-tools-2">
+          <button class="item-two" tool data-color="rojo" data-tool="useLineTool" data-colorHex="#b90000" z-click="useLineTool({strokeStyle:'#b90000', name:'useLineTool'},{singleLine: true})" ><div class="i-color color-rojo"></div></button>
+          <button class="item-two" tool data-color="amarillo" data-tool="useLineTool" data-colorHex="#e7d803" z-click="useLineTool({strokeStyle:'#e7d803', name:'useLineTool'},{singleLine: true})" ><div class="i-color color-amarillo"></div></button>
+          <button class="item-two" tool data-color="verde" data-tool="useLineTool" data-colorHex="#02d802" z-click="useLineTool({strokeStyle:'#02d802', name:'useLineTool'},{singleLine: true})" ><div class="i-color color-verde"></div></button>
+        </div>
+      </div>
+      <div class="hover-tool" title="Lines">
+        <button class="tool-doubleclick" data-toolid="3" title="lines" data-tool="useArrowToolSolid" data-colorHex="#b90000" tool z-click="useArrowTool({arrowStyle:'solid',strokeStyle:'#b90000', name:'useArrowToolSolid'},true)" z-class="{selected:getPropertySummary().properties.name == 'useArrowToolSolid'}">
+          <img src="assets/Flecha_solida_rojo.png">
+        </button>
+        <div id="tools-3" class="items-colors show-tools-3">
+          <button class="item-two" tool data-color="rojo" data-tool="useArrowToolSolid" data-colorHex="#b90000" z-click="useArrowTool({arrowStyle:'solid',strokeStyle:'#b90000', name:'useArrowToolSolid'},true)"><div class="i-color color-rojo"></div></button>
+          <button class="item-two" tool data-color="amarillo" data-tool="useArrowToolSolid" data-colorHex="#e7d803" z-click="useArrowTool({arrowStyle:'solid',strokeStyle:'#e7d803', name:'useArrowToolSolid'},true)"><div class="i-color color-amarillo"></div></button>
+          <button class="item-two" tool data-color="verde" data-tool="useArrowToolSolid" data-colorHex="#02d802" z-click="useArrowTool({arrowStyle:'solid',strokeStyle:'#02d802', name:'useArrowToolSolid'},true)"><div class="i-color color-verde"></div></button>
+        </div>
+      </div>
+      <div class="hover-tool" title="rectangulo">
+        <button class="tool-doubleclick" data-toolid="4" title="rectangulo" data-tool="useRectangleTool" data-colorHex="#b90000" tool z-click="useRectangleTool({opacity:0.2,strokeStyle:'transparent',lineWidth:0,fillStyle:'#b90000'})" z-class="{selected:getCurrentTool()=='rectangle'}">
+          <img src="assets/area_rectangulo_rojo.png">
+        </button>
+        <div id="tools-4" class="items-colors show-tools-3">
+          <button class="item-two" tool data-color="rojo" data-tool="useRectangleTool" data-colorHex="#b90000" z-click="useRectangleTool({opacity:0.2,strokeStyle:'transparent',lineWidth:0,fillStyle:'#b90000'})"><div class="i-color color-rojo"></div></button>
+          <button class="item-two" tool data-color="amarillo" data-tool="useRectangleTool" data-colorHex="#e7d803" z-click="useRectangleTool({opacity:0.2,strokeStyle:'transparent',lineWidth:0,fillStyle:'#e7d803'})"><div class="i-color color-amarillo"></div></button>
+          <button class="item-two" tool data-color="verde" data-tool="useRectangleTool" data-colorHex="#02d802" z-click="useRectangleTool({opacity:0.2,strokeStyle:'transparent',lineWidth:0,fillStyle:'#02d802'})"><div class="i-color color-verde"></div></button>
+        </div>
+      </div>
+      <div class="hover-tool" title="circle">
+        <button class="tool-doubleclick" data-toolid="5" title="circle" data-tool="useCircleTool" data-colorHex="#b90000" tool z-click="useCircleTool({opacity:0.2,strokeStyle:'transparent',lineWidth:0,fillStyle:'#b90000'})" z-class="{selected:getCurrentTool()=='circle'}">
+          <img src="assets/Area_circulo_rojo.png">
+        </button>
+        <div id="tools-5" class="items-colors show-tools-3">
+          <button class="item-two" tool data-color="rojo" data-tool="useCircleTool" data-colorHex="#b90000" z-click="useCircleTool({opacity:0.2,strokeStyle:'transparent',lineWidth:0,fillStyle:'#b90000'})"><div class="i-color color-rojo"></div></button>
+          <button class="item-two" tool data-color="amarillo" data-tool="useCircleTool" data-colorHex="#e7d803" z-click="useCircleTool({opacity:0.2,strokeStyle:'transparent',lineWidth:0,fillStyle:'#e7d803'})"><div class="i-color color-amarillo"></div></button>
+          <button class="item-two" tool data-color="verde" data-tool="useCircleTool" data-colorHex="#02d802" z-click="useCircleTool({opacity:0.2,strokeStyle:'transparent',lineWidth:0,fillStyle:'#02d802'})"><div class="i-color color-verde"></div></button>
+        </div>
+      </div>
+      <div class="hover-tool" title="Lines">
+        <button class="tool-doubleclick" data-toolid="6" title="lines" data-tool="useLineToolPoligono" data-colorHex="#b90000" tool z-click="useLineTool({strokeStyle:'#b90000', opacity:0.2, fillStyle:'#b90000', name:'useLineToolPoligono'},{singleLine: false})" z-class="{selected:getPropertySummary().properties.name == 'useLineToolPoligono' }" >
+          <img src="assets/area_poligono_rojo.png">
+        </button>
+        <div id="tools-6" class="items-colors show-tools-2">
+          <button class="item-two" tool data-color="rojo" data-tool="useLineToolPoligono" data-colorHex="#b90000" z-click="useLineTool({strokeStyle:'#b90000', opacity:0.2, fillStyle:'#b90000', name:'useLineToolPoligono'},{singleLine: false})" ><div class="i-color color-rojo"></div></button>
+          <button class="item-two" tool data-color="amarillo" data-tool="useLineToolPoligono" data-colorHex="#e7d803" z-click="useLineTool({strokeStyle:'#e7d803', opacity:0.2, fillStyle:'#e7d803', name:'useLineToolPoligono'},{singleLine: false})" ><div class="i-color color-amarillo"></div></button>
+          <button class="item-two" tool data-color="verde" data-tool="useLineToolPoligono" data-colorHex="#02d802" z-click="useLineTool({strokeStyle:'#02d802', opacity:0.2, fillStyle:'#02d802', name:'useLineToolPoligono'},{singleLine: false})" ><div class="i-color color-verde"></div></button>
+        </div>
+      </div>
+      <button tool z-click="insertImage({zIndex:9999,lockSize:'true',lockRotation:true})" title="Insert image">
+        <img src="assets/Jugador.png">
+      </button>
+      <button tool z-click="cut()" title="Cut">
+        <img src="assets/Borrar.png">
+      </button>
+      <button tool z-click="undo()" z-disabled="!canUndo()">
+        <img src="assets/Undo.png">
+      </button>
+      <button tool z-click="redo()" z-disabled="!canRedo()">
+        <img src="assets/Redo.png">
+      </button>
+    </div>   
+  </div>
+
+  <div style="display:flex;flex-flow:column;flex: 1 1 auto;min-width:0">
+    <div z-canvas style="width:100%;height: 100%;display: flex;"></div>
+    <!-- <div class="pages">
+      <button title="Insert page" z-click="insertPage()"><i class="fas fa-plus"></i></button>
+      <button title="Delete page" z-click="deletePage()"><i class="fas fa-minus"></i></button>
+      <div z-for="mypage in getPageCount()">
+        <div z-page="mypage" z-height="70" class="page" z-class="{selected: mypage==getCurrentPage()}" z-click="setCurrentPage(mypage)"> </div>
+      </div>
+    </div> -->
+  </div>
+  <!-- <div z-popup="my-menu">
+    <button z-click="download('png', 'drawing.png')">PNG</button>
+    <button z-click="download('jpg', 'drawing.jpg')">JPG</button>
+    <button z-click="download('svg', 'drawing.svg')">SVG</button>
+    <button z-click="download('pdf', 'drawing.pdf')">PDF</button>
+  </div> -->
+</zwibbler>
+<script>
+  //Zwibbler.enableConsoleLogging();
+  const ctx = document.getElementsByTagName('zwibbler')[0];
+  function MyFunction(ctx) {
+    // ctx is actually a Zwibbler context, with functions
+    // like getPageCount() and save() and useBrushTool(). But
+    // you can extend it.
+
+    ctx.setConfig("backgroundImage", "background4.png")
+    ctx.setConfig("background", "#114b67")
+    ctx.setConfig('pageShadow', false);
+    ctx.setConfig('persistent', true);
+    ctx.setConfig('showColourPanel', false);
+    ctx.setConfig('pageInflation',0)
+    ctx.setConfig('outsidePageColour',"#114b67");
+    ctx.setConfig('defaultLineWidth', 6);
+    ctx.setConfig('confine', 'view')
+    //ctx.setConfig('defaultStrokeStyle', 'none')
+    //ctx.setPageBackground(0, "gray");
+
+    ctx.setPageSize(0, 1920,window.innerHeight);
+    ctx.setDocumentSize(window.innerWidth, window.innerHeight)
+    ctx.setZoom('page')
+    ctx.setConfig('drawShapeStyle','radial');
+
+    let btnHover = document.getElementsByClassName('tool-doubleclick');
+    let btnChildrens = document.getElementsByClassName('item-two');
+    let showItems = document.getElementsByClassName('items-colors');
+    
+    for (const btn of btnHover) {
+      btn.addEventListener('dblclick', function (e) {
+        e.stopPropagation();
+        const id = btn.getAttribute('data-toolid');
+        //btn.parentElement.children[1].classList.toggle('selected');
+        for(const item of showItems){
+          item.classList.remove('selected');
+        }
+        document.getElementById('tools-'+id).classList.toggle('selected');
+      });
+      btn.addEventListener('click', function(e){
+        const color = btn.getAttribute('data-color');
+        const tool = btn.getAttribute('data-tool');
+        const colorHex = btn.getAttribute('data-colorHex');
+        const a = ctx.getPropertySummary().properties.name;
+        console.log(a);
+
+        if(tool === "useArrowTool"){
+          ctx.useArrowTool({arrowStyle:'solid',strokeStyle:colorHex,dashes:'6,6', name:'useArrowTool'},true)
+        }
+        if(tool === "useLineTool"){
+          ctx.useLineTool({arrowStyle:'solid',strokeStyle:colorHex, name:'useLineTool'},{singleLine: true})
+        }
+        if(tool === "useArrowToolSolid"){
+          ctx.useArrowTool({arrowStyle:'solid',strokeStyle:colorHex, name:'useArrowToolSolid'},true)
+        }
+        if(tool === "useLineToolPoligono"){
+          ctx.useLineTool({strokeStyle:colorHex, opacity:0.2, fillStyle:colorHex, name:'useLineToolPoligono'},{singleLine: false});
+        }
+      })
+    }
+    for (const btnChild of btnChildrens) {
+      btnChild.addEventListener('click', function (e) {
+        btnChild.parentElement.classList.remove('selected');
+
+        const color = btnChild.getAttribute('data-color');
+        const tool = btnChild.getAttribute('data-tool');
+        const colorHex = btnChild.getAttribute('data-colorHex');
+        
+        const btnParent = btnChild.parentElement.parentElement.children[0];
+        const img = btnChild.parentElement.parentElement.children[0].children[0];
+        
+        btnParent.setAttribute('data-colorHex', colorHex);
+        btnParent.setAttribute('data-tool', tool);
+
+        if(tool === "useArrowTool"){
+          img.setAttribute('src',`assets/flecha_punteada_${color}.png`)
+        }
+        if(tool === "useLineTool"){
+          img.setAttribute('src',`assets/Linea_solida_${color}.png`)
+        }
+        if(tool === "useArrowToolSolid"){
+          img.setAttribute('src',`assets/Flecha_solida_${color}.png`)
+        }
+        if(tool === 'useRectangleTool'){
+          img.setAttribute('src',`assets/area_rectangulo_${color}.png`)
+        }
+        if(tool === 'useCircleTool'){
+          img.setAttribute('src',`assets/Area_circulo_${color}.png`)
+        }
+        if(tool === 'useLineToolPoligono'){
+          img.setAttribute('src',`assets/area_poligono_${color}.png`)
+        }
+        
+      });
+    }
+
+    
+  }
+  
+  window.addEventListener('load', (event) => {
+    MyFunction(Zwibbler.instances[0])
+  });
+
+  
+
+</script>
+</body>
+</html>
